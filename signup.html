@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - MT Trading (pty) Ltd</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>MT Trading (pty) Ltd</h1>
+        </div>
+    </header>
+
+    <h2>Create an Account</h2>
+    <form id="signup-form">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="signup-email" required>
+
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="signup-password" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script>
+        // Handle sign-up form submission
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const signupEmail = document.getElementById('signup-email').value;
+            const signupPassword = document.getElementById('signup-password').value;
+
+            if (signupEmail && signupPassword) {
+                alert('Account created successfully for ' + signupEmail);
+                // Redirect to login page
+                window.location.href = 'index.html'; // Replace with actual login page URL
+            } else {
+                alert('Please fill in all fields before signing up.');
+            }
+        });
+    </script>
+</body>
+</html>
