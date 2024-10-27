@@ -72,131 +72,157 @@
         <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
     </footer>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        scroll-behavior: smooth;
-    }
+    
 
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #a6a6a6;
-    }
 
-    header {
-        background-color: #333;
-        color: white;
-        padding: 1rem;
-    }
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
 
-    .small-text {
-            font-size: 0.5em; /* Adjust as needed for the desired size */
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js"></script>
+
+
+
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
-    .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a6a6a6;
+        }
 
-    .logo h1 {
-        font-size: 1.5rem;
-    }
-
-    nav ul {
-        list-style: none;
-        display: flex;
-        gap: 1rem;
-    }
-
-    nav a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .menu-toggle {
-        display: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-
-    .nav-links.active {
-        display: block;
-    }
-
-    main {
-        padding: 2rem;
-    }
-
-    section {
-        padding: 2rem 0;
-    }
-
-    footer {
-        background-color: #333;
-        color: white;
-        text-align: center;
-        padding: 1rem 0;
-        margin-top: 2rem;
-    }
-
-    .testimonial-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-        gap: 1rem;
-        padding: 1rem 0;
-    }
-
-    .testimonial-gallery img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-        .nav-links {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 70px;
-            right: 10px;
-            background: #333;
+        header {
+            background-color: #333;
+            color: white;
             padding: 1rem;
-            width: 200px;
-            border-radius: 8px;
+        }
+
+        .small-text {
+                font-size: 0.5em; /* Adjust as needed for the desired size */
+            }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-links.active {
             display: block;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        section {
+            padding: 2rem 0;
+        }
+
+        footer {
+            background-color: #333;
             color: white;
-        }
-
-        .logo {
             text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
         }
-    }
 
-    /* Ticker strip styling */
-    .ticker-strip {
-            /* Dark background to match dark theme of TradingView widget */
-            text-align: center;
+        .testimonial-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
         }
-</style>
 
-<script>
-    function toggleMenu() {
-        document.querySelector('.nav-links').classList.toggle('active');
-    }
+        .testimonial-gallery img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            object-fit: cover;
+        }
 
-    function logout() {
-        // This function would contain any logout logic you need, such as clearing session data
-        alert("You have been logged out.");
-    }
-</script>
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 10px;
+                background: #333;
+                padding: 1rem;
+                width: 200px;
+                border-radius: 8px;
+            }
+
+            .menu-toggle {
+                display: block;
+                color: white;
+            }
+
+            .logo {
+                text-align: center;
+            }
+        }
+
+        /* Ticker strip styling */
+        .ticker-strip {
+                /* Dark background to match dark theme of TradingView widget */
+                text-align: center;
+            }
+    </style>
+
+    <script>
+
+        // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
+        authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
+        projectId: "mt-trading-signup-and-log-in",
+        storageBucket: "mt-trading-signup-and-log-in.appspot.com",
+        messagingSenderId: "101302422584",
+        appId: "1:101302422584:web:07d472b05e81a6930beacd"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        function logout() {
+            // This function would contain any logout logic you need, such as clearing session data
+            alert("You have been logged out.");
+        }
+    </script>
 </body>
 </html>
