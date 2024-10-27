@@ -3,14 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MT Trading (pty) Ltd</title>
+    <title>MT Trading (pty) Ltd - Sign Up</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <script>        function toggleMenu() {
+        const navLinks = document.getElementById('nav-links');
+        navLinks.classList.toggle('show');
+    }</script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
+            authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
+            databaseURL: "https://mt-trading-signup-and-log-in-default-rtdb.firebaseio.com",
+            projectId: "mt-trading-signup-and-log-in",
+            storageBucket: "mt-trading-signup-and-log-in.appspot.com",
+            messagingSenderId: "101302422584",
+            appId: "1:101302422584:web:07d472b05e81a6930beacd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const database = getDatabase();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('signup-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value.trim();
+                const surname = document.getElementById('surname').value.trim();
+                const birthdate = new Date(document.getElementById('birthdate').value);
+                const phone = document.getElementById('phone').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        const userData = {
+                            name: name,
+                            surname: surname,
+                            birthdate: birthdate.toISOString().split('T')[0],
+                            phone: phone,
+                            email: email,
+                            last_login: Date.now()
+                        };
+                        set(ref(database, 'users/' + user.uid), userData)
+                            .then(() => {
+                                alert('You have successfully registered, proceed to log in');
+                                window.location.href = "login.html";
+                            });
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                    });
+            });
+        });
+
+
+    </script>
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="logo">
-            <h1>MT Trading  <span class="small-text">(pty) Ltd</span></h1>
+            <h1>MT Trading <span class="small-text">(pty) Ltd</span></h1>
             <nav>
                 <div class="menu-toggle" onclick="toggleMenu()">☰</div>
                 <ul id="nav-links">
@@ -23,7 +81,6 @@
         </div>
     </header>
 
-    <!-- Signup Section -->
     <section id="signup-section">
         <h2>Sign Up</h2>
         <form id="signup-form">
@@ -55,7 +112,7 @@
             <input type="password" id="confirm-password" name="confirm-password" required>
             <small class="error" id="confirm-password-error"></small>
 
-            <button type="submit">Sign Up</button>
+            <button type="submit">Register</button>
         </form>
     </section>
 
@@ -63,73 +120,14 @@
         <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript for toggle menu -->
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('nav-links');
-            navLinks.classList.toggle('show');
-        }
-
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.querySelectorAll('.error').forEach(error => error.textContent = '');
-            const name = document.getElementById('name').value.trim();
-            const surname = document.getElementById('surname').value.trim();
-            const birthdate = new Date(document.getElementById('birthdate').value);
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-
-            let valid = true;
-            const today = new Date();
-
-            if (!name) {
-                document.getElementById('name-error').textContent = 'Please enter your name.';
-                valid = false;
-            }
-            if (!surname) {
-                document.getElementById('surname-error').textContent = 'Please enter your surname.';
-                valid = false;
-            }
-            if (birthdate == "Invalid Date" || (today.getFullYear() - birthdate.getFullYear() < 18)) {
-                document.getElementById('birthdate-error').textContent = 'You must be at least 18 years old.';
-                valid = false;
-            }
-            if (!/^\d{10}$/.test(phone)) {
-                document.getElementById('phone-error').textContent = 'Please enter a valid 10-digit cellphone number.';
-                valid = false;
-            }
-            if (!/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
-                document.getElementById('email-error').textContent = 'Please enter a valid email address.';
-                valid = false;
-            }
-            if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(password)) {
-                document.getElementById('password-error').textContent = 'Password must be at least 8 characters, include 1 uppercase, 1 lowercase, 1 number, and 1 symbol.';
-                valid = false;
-            }
-            if (password !== confirmPassword) {
-                document.getElementById('confirm-password-error').textContent = 'Passwords do not match.';
-                valid = false;
-            }
-
-            if (valid) {
-                alert('You have successfully signed up! PROCEED to LOGIN on MAIN PAGE');
-                window.location.href = "index.html#login";
-            }
-        });
-    </script>
-
-    <!-- CSS Styling -->
     <style>
         /* General styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #5d7d84;
-            margin: 0; margin: 0;
+            margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-color: #5d7d84;
             color: #333;
         }
 
@@ -139,49 +137,48 @@
             color: white;
             padding: 20px 0;
             text-align: center;
-            position: -ms-page;
+            position: relative;
             width: 100%;
             top: 0;
             z-index: 1000;
         }
-        
+
         .small-text {
-            font-size: 0.5em; /* Adjust as needed for the desired size */
+            font-size: 0.5em;
         }
-        
+
         header h1 {
             margin: 0;
         }
-        
+
         nav {
             position: relative;
         }
-        
+
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
             text-align: right;
         }
-        
+
         nav ul {
             list-style: none;
             padding: 0;
             margin: 0;
             text-align: center;
         }
-        
+
         nav ul li {
             display: inline-block;
             margin: 0 15px;
         }
-        
+
         nav ul li a {
             color: white;
             text-decoration: none;
         }
-        
-        /* Responsive navigation */
+
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -207,7 +204,7 @@
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
             width: 300px;
-            margin: 100px auto 0; /* Adjust for header */
+            margin: 100px auto 0;
             text-align: center;
         }
 
@@ -255,8 +252,8 @@
             padding: 10px 0;
             bottom: 0;
             width: 100%;
-            position: -ms-page;
-        }</style>
+            position: relative;
+        }
     </style>
 </body>
 </html>
