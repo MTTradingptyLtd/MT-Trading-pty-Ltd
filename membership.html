@@ -20,7 +20,7 @@
                     <li><a href="#traders-group">Traders Group</a></li>
                     <li><a href="#competitions">Competitions</a></li>
                     <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="index.html" onclick="logout()">Logout</a></li>
+                    <li><a href="index.html" onclick="logout(event)">Logout</a></li>
                 </ul>
                 <div class="menu-toggle" onclick="toggleMenu()">☰</div>
             </nav>
@@ -41,7 +41,47 @@
         
     </header>
     <section>
+        <script>
+    
         
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        function logout(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            signOut(auth).then(() => {
+                alert("You have been logged out.");
+                window.location.href = "index.html"; // Redirect to login page
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        }
+
+        let inactivityTime = function () {
+            let timer;
+            window.onload = resetTimer;
+            window.onmousemove = resetTimer;
+            window.onkeypress = resetTimer;
+
+            function logoutUser() {
+                logout();
+            }
+
+            function resetTimer() {
+                clearTimeout(timer);
+                timer = setTimeout(logoutUser, 600000); // 10 minutes
+            }
+        };
+
+        inactivityTime();
+
+        function logout() {
+            // This function would contain any logout logic you need, such as clearing session data
+            alert("You have been logged out.");
+        }
+
+        </script>
     </section>
     <main>
         <section id="mentorship"><h2>Mentorship</h2><p>Content for Mentorship section...</p></section>
@@ -72,17 +112,28 @@
         <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
     </footer>
 
-    
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
+            authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
+            projectId: "mt-trading-signup-and-log-in",
+            storageBucket: "mt-trading-signup-and-log-in.appspot.com",
+            messagingSenderId: "101302422584",
+            appId: "1:101302422584:web:07d472b05e81a6930beacd"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
 
-    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js"></script>
-
-
-
-
+    </script>
 
     <style>
         * {
@@ -104,8 +155,8 @@
         }
 
         .small-text {
-                font-size: 0.5em; /* Adjust as needed for the desired size */
-            }
+            font-size: 0.5em; /* Adjust as needed for the desired size */
+        }
 
         .container {
             display: flex;
@@ -195,34 +246,9 @@
 
         /* Ticker strip styling */
         .ticker-strip {
-                /* Dark background to match dark theme of TradingView widget */
-                text-align: center;
-            }
+            /* Dark background to match dark theme of TradingView widget */
+            text-align: center;
+        }
     </style>
-
-    <script>
-
-        // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
-        authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
-        projectId: "mt-trading-signup-and-log-in",
-        storageBucket: "mt-trading-signup-and-log-in.appspot.com",
-        messagingSenderId: "101302422584",
-        appId: "1:101302422584:web:07d472b05e81a6930beacd"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-
-        function toggleMenu() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        }
-
-        function logout() {
-            // This function would contain any logout logic you need, such as clearing session data
-            alert("You have been logged out.");
-        }
-    </script>
 </body>
 </html>
