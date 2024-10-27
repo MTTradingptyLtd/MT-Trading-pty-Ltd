@@ -3,16 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MT Trading (pty) Ltd</title>
+    <title>MT Trading (pty) Ltd - Login</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
+            authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
+            projectId: "mt-trading-signup-and-log-in",
+            storageBucket: "mt-trading-signup-and-log-in.appspot.com",
+            messagingSenderId: "101302422584",
+            appId: "1:101302422584:web:07d472b05e81a6930beacd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value.trim();
+                const password = document.getElementById('login-password').value;
+
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        alert('You have successfully logged in');
+                        window.location.href = "membership.html";
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                    });
+            });
+        });
+
+        
+    //Toggle nav button //
+
+    function toggleMenu() {
+        const navLinks = document.getElementById('nav-links');
+        navLinks.classList.toggle('show');
+    }
+
+    // Redirect to sign-up page
+    document.getElementById('sign-up-button').onclick = function() {
+        window.location.href = 'signup.html'; // Redirect to the sign-up page
+    };
+
+    </script>
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="logo">
-            <h1>MT Trading  <span class="small-text">(pty) Ltd</span></h1>
-
-                <nav>
+            <h1>MT Trading <span class="small-text">(pty) Ltd</span></h1>
+            <nav>
                 <div class="menu-toggle" onclick="toggleMenu()">☰</div>
                 <ul id="nav-links">
                     <li><a href="index.html#about">About</a></li>
@@ -21,12 +66,9 @@
                     <li><a href="login.html" id="login-button">Login</a></li>
                 </ul>
             </nav>
-
         </div>
-        
     </header>
 
-    <!-- Login Section -->
     <section id="login-section">
         <h2>Login</h2>
         <form id="login-form">
@@ -43,12 +85,9 @@
         </form>
     </section>
 
-    <!-- Footer Section -->
     <footer>
         <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
     </footer>
-
-    <script src="login.js"></script>
 
     <style>
         /* General Styling */
@@ -63,80 +102,68 @@
 
         /* Header Styling */
         header {
-    background-color: #005f73;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    position: relative;
-}
-.small-text {
-            font-size: 0.5em; /* Adjust as needed for the desired size */
-        }
-
-header h1 {
-    margin: 0;
-}
-
-nav {
-    position: relative;
-}
-
-.menu-toggle {
-        display: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        text-align: right;
-    }
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-}
-
-nav ul li {
-    display: inline-block;
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-/* Responsive navigation menu */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-
-    nav ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    nav ul li {
-        display: block;
-        margin: 10px 0;
-    }
-
-    nav ul.show {
-        display: flex;
-    }
-}
-
-
-        /* Footer Styling */
-        footer {
             background-color: #005f73;
             color: white;
+            padding: 20px 0;
             text-align: center;
-            padding: 10px 0;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
+            position: relative;
+        }
+
+        .small-text {
+            font-size: 0.5em;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            position: relative;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            text-align: right;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
         }
 
         /* Login Section Styling */
@@ -169,8 +196,6 @@ nav ul li a {
         #login-form label {
             text-align: right;
             color: black;
-            ;
-            
         }
 
         #login-form input[type="email"],
@@ -200,13 +225,10 @@ nav ul li a {
             color: white;
         }
 
-
-
         #login-buttons button#sign-up-button {
             background-color: #5d7d84;
             color: white;
         }
-
     </style>
 </body>
 </html>
