@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Area - MT Trading (pty) Ltd</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>MT Trading  <span class="small-text">(pty) Ltd</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#mentorship">Mentorship</a></li>
+                    <li><a href="#signals">Signals</a></li>
+                    <li><a href="#strategy">MT Trading Strategy</a></li>
+                    <li><a href="#traders-group">Traders Group</a></li>
+                    <li><a href="#competitions">Competitions</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="index.html" onclick="logout(event)">Logout</a></li>
+                </ul>
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            </nav>
+        </div>
+        <section>
+
+        </section>
+        <!-- TradingView Ticker Strip -->
+        <div class="ticker-strip">
+            <iframe src="https://www.tradingview-widget.com/embed-widget/ticker-tape/?locale=en#%7B%22symbols%22%3A%5B%7B%22proName%22%3A%22FOREXCOM%3ASPXUSD%22%2C%22title%22%3A%22S%26P%20500%22%7D%2C%7B%22proName%22%3A%22FOREXCOM%3ANSXUSD%22%2C%22title%22%3A%22US%20100%22%7D%2C%7B%22proName%22%3A%22FX_IDC%3AEURUSD%22%2C%22title%22%3A%22EUR%2FUSD%22%7D%2C%7B%22proName%22%3A%22BITSTAMP%3ABTCUSD%22%2C%22title%22%3A%22Bitcoin%22%7D%2C%7B%22proName%22%3A%22BITSTAMP%3AETHUSD%22%2C%22title%22%3A%22Ethereum%22%7D%5D%2C%22showSymbolLogo%22%3Atrue%2C%22colorTheme%22%3A%22dark%22%2C%22isTransparent%22%3Atrue%2C%22displayMode%22%3A%22adaptive%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A44%7D" 
+                    width="100%" 
+                    height="50" 
+                    frameborder="0" 
+                    allowtransparency="true" 
+                    scrolling="no">
+            </iframe>
+        </div>
+        
+    </header>
+    <section>
+        <script>
+    
+        
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        function logout(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            signOut(auth).then(() => {
+                alert("You have been logged out.");
+                window.location.href = "index.html"; // Redirect to login page
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        }
+
+        let inactivityTime = function () {
+            let timer;
+            window.onload = resetTimer;
+            window.onmousemove = resetTimer;
+            window.onkeypress = resetTimer;
+
+            function logoutUser() {
+                logout();
+            }
+
+            function resetTimer() {
+                clearTimeout(timer);
+                timer = setTimeout(logoutUser, 600000); // 10 minutes
+            }
+        };
+
+        inactivityTime();
+
+        function logout() {
+            // This function would contain any logout logic you need, such as clearing session data
+            alert("You have been logged out.");
+        }
+
+        </script>
+    </section>
+    <main>
+        <section id="mentorship"><h2>Mentorship</h2><p>Content for Mentorship section...</p></section>
+        <section id="signals"><h2>Signals</h2><p>Content for Signals section...</p></section>
+        <section id="strategy"><h2>MT Trading Strategy</h2><p>Content for Strategy section...</p></section>
+        <section id="traders-group"><h2>Traders Group</h2><p>Content for Traders Group section...</p></section>
+        <section id="competitions"><h2>Competitions</h2><p>Content for Competitions section...</p></section>
+        <section id="testimonials">
+            <h2>Testimonials</h2>
+            <div class="testimonial-gallery">
+                <img src="images/1.png" alt="1">
+                <img src="images/10.png" alt="2">
+                <img src="images/11.png" alt="3">
+                <img src="images/12.png" alt="4">
+                <img src="images/2.png" alt="5">
+                <img src="images/3.png" alt="6">
+                <img src="images/4.png" alt="7">
+                <img src="images/5.png" alt="8">
+                <img src="images/6.png" alt="9">
+                <img src="images/7.png" alt="10">
+                <img src="images/8.png" alt="11">
+                <img src="images/9.png" alt="12">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
+            authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
+            projectId: "mt-trading-signup-and-log-in",
+            storageBucket: "mt-trading-signup-and-log-in.appspot.com",
+            messagingSenderId: "101302422584",
+            appId: "1:101302422584:web:07d472b05e81a6930beacd"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+
+
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a6a6a6;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+        }
+
+        .small-text {
+            font-size: 0.5em; /* Adjust as needed for the desired size */
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        section {
+            padding: 2rem 0;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        .testimonial-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .testimonial-gallery img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 10px;
+                background: #333;
+                padding: 1rem;
+                width: 200px;
+                border-radius: 8px;
+            }
+
+            .menu-toggle {
+                display: block;
+                color: white;
+            }
+
+            .logo {
+                text-align: center;
+            }
+        }
+
+        /* Ticker strip styling */
+        .ticker-strip {
+            /* Dark background to match dark theme of TradingView widget */
+            text-align: center;
+        }
+    </style>
+</body>
+</html>
