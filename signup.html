@@ -6,13 +6,15 @@
     <title>MT Trading (pty) Ltd - Sign Up</title>
     <link rel="stylesheet" href="style.css">
     
-    <script>        function toggleMenu() {
-        const navLinks = document.getElementById('nav-links');
-        navLinks.classList.toggle('show');
-    }</script>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('show');
+        }
+    </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
         const firebaseConfig = {
@@ -38,6 +40,47 @@
                 const phone = document.getElementById('phone').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+
+                const age = new Date().getFullYear() - birthdate.getFullYear();
+                const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                const isValidPhone = /^\d{10}$/.test(phone);
+                const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+                if (age < 18) {
+                    document.getElementById('birthdate-error').innerText = "You must be over the age of 18.";
+                    return;
+                } else {
+                    document.getElementById('birthdate-error').innerText = "";
+                }
+
+                if (!isValidEmail) {
+                    document.getElementById('email-error').innerText = "Please enter a valid email address.";
+                    return;
+                } else {
+                    document.getElementById('email-error').innerText = "";
+                }
+
+                if (!isValidPhone) {
+                    document.getElementById('phone-error').innerText = "Please enter a valid 10-digit phone number.";
+                    return;
+                } else {
+                    document.getElementById('phone-error').innerText = "";
+                }
+
+                if (password !== confirmPassword) {
+                    document.getElementById('password-error').innerText = "Passwords do not match.";
+                    return;
+                } else {
+                    document.getElementById('password-error').innerText = "";
+                }
+
+                if (!passwordRequirements.test(password)) {
+                    document.getElementById('password-error').innerText = "Password must include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol.";
+                    return;
+                } else {
+                    document.getElementById('password-error').innerText = "";
+                }
 
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
@@ -52,8 +95,10 @@
                         };
                         set(ref(database, 'users/' + user.uid), userData)
                             .then(() => {
-                                alert('You have successfully registered, proceed to log in');
-                                window.location.href = "login.html";
+                                sendEmailVerification(user).then(() => {
+                                    alert('Successfully signed up, verify email address then proceed to Log in');
+                                    window.location.href = "login.html";
+                                });
                             });
                     })
                     .catch((error) => {
@@ -61,8 +106,6 @@
                     });
             });
         });
-
-
     </script>
 </head>
 <body>
