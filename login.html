@@ -1,3 +1,5 @@
+# Login Page
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,18 +9,16 @@
     <link rel="stylesheet" href="style.css">
     
     <script>
-            //Toggle nav button //
-
+        //Toggle nav button //
         function toggleMenu() {
-        const navLinks = document.getElementById('nav-links');
-        navLinks.classList.toggle('show');
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('show');
         }
-
     </script>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
     
         const firebaseConfig = {
             apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
@@ -40,7 +40,12 @@
                 const password = document.getElementById('login-password').value;
     
                 signInWithEmailAndPassword(auth, email, password)
-                    .then(() => {
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        if (!user.emailVerified) {
+                            alert('Please verify your email address.');
+                            return;
+                        }
                         alert('You have successfully logged in');
                         window.location.href = "membership.html";
                     })
@@ -85,7 +90,6 @@
             window.location.href = 'signup.html'; // Redirect to the sign-up page
         };
     </script>
-    
     
 </head>
 <body>
@@ -263,6 +267,16 @@
         #login-buttons button#sign-up-button {
             background-color: #5d7d84;
             color: white;
+        }
+        
+        footer {
+            background-color: #005f73;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            bottom: 0;
+            width: 100%;
+            position: relative;
         }
     </style>
 </body>
