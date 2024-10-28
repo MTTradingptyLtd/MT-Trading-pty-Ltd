@@ -20,6 +20,7 @@
                     <li><a href="#traders-group">Traders Group</a></li>
                     <li><a href="#competitions">Competitions</a></li>
                     <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="profile.html" id="user-name">User's Name</a></li>
                     <li><a href="index.html" onclick="logout(event)">Logout</a></li>
                 </ul>
                 <div class="menu-toggle" onclick="toggleMenu()">☰</div>
@@ -108,6 +109,23 @@
         }
 
         setInterval(resetSignUp, 60000); // Check every minute
+        </script>
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+            import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
+                authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
+                projectId: "mt-trading-signup-and-log-in",
+                storageBucket: "mt-trading-signup-and-log-in.appspot.com",
+                messagingSenderId: "101302422584",
+                appId: "1:101302422584:web:07d472b05e81a6930beacd"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
         </script>
     </section>
     <main>
@@ -204,24 +222,7 @@
         <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
-            authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
-            projectId: "mt-trading-signup-and-log-in",
-            storageBucket: "mt-trading-signup-and-log-in.appspot.com",
-            messagingSenderId: "101302422584",
-            appId: "1:101302422584:web:07d472b05e81a6930beacd"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-
-    </script>
+    
 
     <style>
         * {
@@ -310,7 +311,7 @@
         }
 
         .elegant-button {
-            background-color: #4CAF50; /* Green */
+            background-color: #3a3d3a; 
             border: none;
             color: white;
             padding: 15px 32px;
@@ -325,7 +326,7 @@
         }
 
         .elegant-button:hover {
-            background-color: #45a049;
+            background-color: #5f5f5f;
         }
 
         @media (max-width: 768px) {
