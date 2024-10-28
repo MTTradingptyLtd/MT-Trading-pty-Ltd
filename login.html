@@ -8,6 +8,7 @@
     <title>MT Trading (pty) Ltd - Login</title>
     <link rel="stylesheet" href="style.css">
     
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         //Toggle nav button //
         function toggleMenu() {
@@ -19,7 +20,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    
+
         const firebaseConfig = {
             apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
             authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
@@ -28,17 +29,23 @@
             messagingSenderId: "101302422584",
             appId: "1:101302422584:web:07d472b05e81a6930beacd"
         };
-    
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
-    
+
         document.addEventListener('DOMContentLoaded', function() {
             // Handle login form submission
             document.getElementById('login-form').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const email = document.getElementById('login-email').value.trim();
                 const password = document.getElementById('login-password').value;
-    
+
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (recaptchaResponse.length === 0) {
+                    alert('Please complete the reCAPTCHA.');
+                    return;
+                }
+
                 signInWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
@@ -52,7 +59,7 @@
                     .catch((error) => {
                         const errorCode = error.code;
                         let errorMessage;
-    
+
                         // Custom error messages based on Firebase error codes
                         switch (errorCode) {
                             case 'auth/invalid-email':
@@ -79,12 +86,12 @@
                             default:
                                 errorMessage = error.message; // Use Firebase default message as fallback
                         }
-    
+
                         alert(errorMessage); // Display the customized error message
                     });
             });
         });
-    
+
         // Redirect to sign-up page
         document.getElementById('sign-up-button').onclick = function() {
             window.location.href = 'signup.html'; // Redirect to the sign-up page
@@ -116,6 +123,8 @@
 
             <label for="login-password">Password</label>
             <input type="password" id="login-password" name="login-password" required>
+
+            <div class="g-recaptcha" data-sitekey="6LdIw24qAAAAAI0Ekj38x306mACzKuUVK4JtfxGX"></div>
 
             <div id="login-buttons">
                 <button type="button" id="sign-up-button">Sign Up</button>
