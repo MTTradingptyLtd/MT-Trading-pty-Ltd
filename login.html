@@ -6,7 +6,8 @@
     <title>MT Trading (pty) Ltd - Login</title>
     <link rel="stylesheet" href="style.css">
     
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script> <!-- reCAPTCHA API -->
+    
     <script>
         //Toggle nav button //
         function toggleMenu() {
@@ -14,7 +15,7 @@
             navLinks.classList.toggle('show');
         }
     </script>
-    
+ 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -37,65 +38,61 @@
                 e.preventDefault();
                 const email = document.getElementById('login-email').value.trim();
                 const password = document.getElementById('login-password').value;
+                const recaptchaResponse = document.querySelector(".g-recaptcha-response").value;
 
-                const recaptchaResponse = grecaptcha.getResponse();
-                if (recaptchaResponse.length === 0) {
-                    alert('Please complete the reCAPTCHA.');
-                    return;
-                }
-
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        if (!user.emailVerified) {
-                            alert('Please verify your email address.');
-                            return;
-                        }
-                        alert('You have successfully logged in');
-                        window.location.href = "membership.html";
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        let errorMessage;
-
-                        // Custom error messages based on Firebase error codes
-                        switch (errorCode) {
-                            case 'auth/invalid-email':
-                                errorMessage = 'Please enter a valid email address.';
-                                break;
-                            case 'auth/user-disabled':
-                                errorMessage = 'This account has been disabled.';
-                                break;
-                            case 'auth/user-not-found':
-                                errorMessage = 'No account found with this email.';
-                                break;
-                            case 'auth/wrong-password':
-                                errorMessage = 'Incorrect password. Please try again.';
-                                break;
-                            case 'auth/email-already-in-use':
-                                errorMessage = 'This email is already in use.';
-                                break;
-                            case 'auth/weak-password':
-                                errorMessage = 'Password is too weak. Use a stronger password.';
-                                break;
-                            case 'auth/invalid-credential':
-                                errorMessage = 'Invalid credentials. Please check your configuration or try again later.';
-                                break;
-                            default:
-                                errorMessage = error.message; // Use Firebase default message as fallback
-                        }
-
-                        alert(errorMessage); // Display the customized error message
-                    });
+                // reCAPTCHA verification
+                fetch("https://your-cloud-function-url", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ recaptcha: recaptchaResponse })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        signInWithEmailAndPassword(auth, email, password)
+                        .then((userCredential) => {
+                            const user = userCredential.user;
+                            if (!user.emailVerified) {
+                                alert('Please verify your email address.');
+                                return;
+                            }
+                            alert('You have successfully logged in');
+                            window.location.href = "membership.html";
+                        })
+                        .catch((error) => {
+                            const errorCode = error.code;
+                            let errorMessage;
+    
+                            switch (errorCode) {
+                                case 'auth/invalid-email':
+                                    errorMessage = 'Please enter a valid email address.';
+                                    break;
+                                case 'auth/user-disabled':
+                                    errorMessage = 'This account has been disabled.';
+                                    break;
+                                case 'auth/user-not-found':
+                                    errorMessage = 'No account found with this email.';
+                                    break;
+                                case 'auth/wrong-password':
+                                    errorMessage = 'Incorrect password. Please try again.';
+                                    break;
+                                default:
+                                    errorMessage = error.message;
+                            }
+                            alert(errorMessage);
+                        });
+                    } else {
+                        alert("reCAPTCHA verification failed. Please try again.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
             });
         });
     
-        // Redirect to sign-up page
         document.getElementById('sign-up-button').onclick = function() {
-            window.location.href = 'signup.html'; // Redirect to the sign-up page
+            window.location.href = 'signup.html';
         };
     </script>
-    
 </head>
 <body>
     <header>
@@ -122,10 +119,9 @@
             <label for="login-password">Password</label>
             <input type="password" id="login-password" name="login-password" required>
 
-            
-            <section>
-                <div class="g-recaptcha" data-sitekey="6LdIw24qAAAAAI0Ekj38x306mACzKuUVK4JtfxGX"></div>
-            </section>
+            <!-- reCAPTCHA widget -->
+            <div class="g-recaptcha" data-sitekey="6LdIw24qAAAAAI0Ekj38x306mACzKuUVK4JtfxGX"></div>
+
             <div id="login-buttons">
                 <button type="button" id="sign-up-button">Sign Up</button>
                 <button type="submit">Log in</button>
@@ -154,7 +150,6 @@
             color: white;
             padding: 20px 0;
             text-align: center;
-            position: relative;
         }
 
         .small-text {
@@ -224,7 +219,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             border-radius: 8px;
-            
         }
 
         #login-section h2 {
@@ -278,20 +272,12 @@
             background-color: #5d7d84;
             color: white;
         }
-        
+
         footer {
             background-color: #005f73;
             color: white;
             text-align: center;
             padding: 10px 0;
-            bottom: 0;
-            width: 100%;
-            position: relative;
-        }
-
-        /* reCAPTCHA Styling */
-        .g-recaptcha {
-            margin: 20px 0;
         }
     </style>
 </body>
