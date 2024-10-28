@@ -6,16 +6,17 @@
     <title>MT Trading (pty) Ltd - Login</title>
     <link rel="stylesheet" href="style.css">
     
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script> <!-- reCAPTCHA API -->
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdIw24qAAAAAI0Ekj38x306mACzKuUVK4JtfxGX"></script>
     
     <script>
-        //Toggle nav button //
+        //Toggle nav button
         function toggleMenu() {
             const navLinks = document.getElementById('nav-links');
             navLinks.classList.toggle('show');
         }
     </script>
- 
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -36,62 +37,69 @@
             // Handle login form submission
             document.getElementById('login-form').addEventListener('submit', function(e) {
                 e.preventDefault();
-                const email = document.getElementById('login-email').value.trim();
-                const password = document.getElementById('login-password').value;
-                const recaptchaResponse = document.querySelector(".g-recaptcha-response").value;
 
-                // reCAPTCHA verification
-                fetch("https://your-cloud-function-url", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ recaptcha: recaptchaResponse })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6LdIw24qAAAAAI0Ekj38x306mACzKuUVK4JtfxGX', {action: 'login'}).then(function(token) {
+                        // Add the token to the form
+                        const tokenInput = document.createElement('input');
+                        tokenInput.setAttribute('type', 'hidden');
+                        tokenInput.setAttribute('name', 'g-recaptcha-response');
+                        tokenInput.setAttribute('value', token);
+                        document.getElementById('login-form').appendChild(tokenInput);
+
+                        const email = document.getElementById('login-email').value.trim();
+                        const password = document.getElementById('login-password').value;
+
                         signInWithEmailAndPassword(auth, email, password)
-                        .then((userCredential) => {
-                            const user = userCredential.user;
-                            if (!user.emailVerified) {
-                                alert('Please verify your email address.');
-                                return;
-                            }
-                            alert('You have successfully logged in');
-                            window.location.href = "membership.html";
-                        })
-                        .catch((error) => {
-                            const errorCode = error.code;
-                            let errorMessage;
-    
-                            switch (errorCode) {
-                                case 'auth/invalid-email':
-                                    errorMessage = 'Please enter a valid email address.';
-                                    break;
-                                case 'auth/user-disabled':
-                                    errorMessage = 'This account has been disabled.';
-                                    break;
-                                case 'auth/user-not-found':
-                                    errorMessage = 'No account found with this email.';
-                                    break;
-                                case 'auth/wrong-password':
-                                    errorMessage = 'Incorrect password. Please try again.';
-                                    break;
-                                default:
-                                    errorMessage = error.message;
-                            }
-                            alert(errorMessage);
-                        });
-                    } else {
-                        alert("reCAPTCHA verification failed. Please try again.");
-                    }
-                })
-                .catch(error => console.error("Error:", error));
+                            .then((userCredential) => {
+                                const user = userCredential.user;
+                                if (!user.emailVerified) {
+                                    alert('Please verify your email address.');
+                                    return;
+                                }
+                                alert('You have successfully logged in');
+                                window.location.href = "membership.html";
+                            })
+                            .catch((error) => {
+                                const errorCode = error.code;
+                                let errorMessage;
+
+                                switch (errorCode) {
+                                    case 'auth/invalid-email':
+                                        errorMessage = 'Please enter a valid email address.';
+                                        break;
+                                    case 'auth/user-disabled':
+                                        errorMessage = 'This account has been disabled.';
+                                        break;
+                                    case 'auth/user-not-found':
+                                        errorMessage = 'No account found with this email.';
+                                        break;
+                                    case 'auth/wrong-password':
+                                        errorMessage = 'Incorrect password. Please try again.';
+                                        break;
+                                    case 'auth/email-already-in-use':
+                                        errorMessage = 'This email is already in use.';
+                                        break;
+                                    case 'auth/weak-password':
+                                        errorMessage = 'Password is too weak. Use a stronger password.';
+                                        break;
+                                    case 'auth/invalid-credential':
+                                        errorMessage = 'Invalid credentials. Please check your configuration or try again later.';
+                                        break;
+                                    default:
+                                        errorMessage = error.message;
+                                }
+
+                                alert(errorMessage);
+                            });
+                    });
+                });
             });
+
+            document.getElementById('sign-up-button').onclick = function() {
+                window.location.href = 'signup.html';
+            };
         });
-    
-        document.getElementById('sign-up-button').onclick = function() {
-            window.location.href = 'signup.html';
-        };
     </script>
 </head>
 <body>
@@ -118,9 +126,6 @@
 
             <label for="login-password">Password</label>
             <input type="password" id="login-password" name="login-password" required>
-
-            <!-- reCAPTCHA widget -->
-            <div class="g-recaptcha" data-sitekey="6LdIw24qAAAAAI0Ekj38x306mACzKuUVK4JtfxGX"></div>
 
             <div id="login-buttons">
                 <button type="button" id="sign-up-button">Sign Up</button>
@@ -150,6 +155,7 @@
             color: white;
             padding: 20px 0;
             text-align: center;
+            position: relative;
         }
 
         .small-text {
@@ -272,12 +278,15 @@
             background-color: #5d7d84;
             color: white;
         }
-
+        
         footer {
             background-color: #005f73;
             color: white;
             text-align: center;
             padding: 10px 0;
+            bottom: 0;
+            width: 100%;
+            position: relative;
         }
     </style>
 </body>
