@@ -18,7 +18,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
+    
         const firebaseConfig = {
             apiKey: "AIzaSyBIRVXFCPBpepPUEZz9aAbF-oVICVxTsec",
             authDomain: "mt-trading-signup-and-log-in.firebaseapp.com",
@@ -27,10 +27,10 @@
             messagingSenderId: "101302422584",
             appId: "1:101302422584:web:07d472b05e81a6930beacd"
         };
-
+    
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
-
+    
         document.addEventListener('DOMContentLoaded', function() {
             // Handle login form submission
             document.getElementById('login-form').addEventListener('submit', function(e) {
@@ -89,7 +89,7 @@
                     });
             });
         });
-
+    
         // Redirect to sign-up page
         document.getElementById('sign-up-button').onclick = function() {
             window.location.href = 'signup.html'; // Redirect to the sign-up page
@@ -284,6 +284,11 @@
             bottom: 0;
             width: 100%;
             position: relative;
+        }
+
+        /* reCAPTCHA Styling */
+        .g-recaptcha {
+            margin: 20px 0;
         }
     </style>
 </body>
