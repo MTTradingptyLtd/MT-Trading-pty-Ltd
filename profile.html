@@ -121,15 +121,22 @@
 
     <main>
         <section id="user-profile">
-            <h2>Member's Profile</h2>
             <div class="profile-container">
+                <section><h2>Member's Profile</h2></section>
                 <img id="profile-picture" src="default-profile.png" alt="Profile Picture">
                 <h3 id="user-fullname">User's Full Name</h3>
                 <p id="user-email">user@example.com</p>
                 <button class="elegant-button" onclick="document.getElementById('file-input').click()">Upload Profile Picture</button>
                 <input type="file" id="file-input" style="display:none" accept="image/*" onchange="uploadProfilePicture(event)">
                 <button class="elegant-button" onclick="updateProfile()">Update Profile</button>
-                <div class="profile-info">
+                
+            </div>
+        </section>
+
+        <section id="profile-details-section">
+            <div class="profile-container">
+                <section><h2>Update Profile details</h2></section>
+                <form id="profile-info">
                     <label for="user-gender">Gender:</label>
                     <input type="text" id="user-gender" placeholder="Gender">
                     <label for="user-country">Country:</label>
@@ -139,16 +146,18 @@
                     <label for="user-street">Street:</label>
                     <input type="text" id="user-street" placeholder="Street">
                     <label for="user-postal">Postal Code:</label>
-                    <input type="text" id="user-postal" placeholder="Postal Code">
-                </div>
-                <div class="password-section">
-                    <label for="new-password">Change Password:</label>
-                    <input type="password" id="new-password" placeholder="New Password">
-                    <button class="elegant-button" onclick="changePassword()">Update Password</button>
-                </div>
+                    <input type="number" id="user-postal" placeholder="Postal Code">
+                
+                    <button class="elegant-button" type="submit">Update</button>
+                
+                </form>
+
+
             </div>
+                
         </section>
     </main>
+
 
     <footer>
         <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
@@ -246,7 +255,7 @@
         }
 
         .elegant-button {
-            background-color: #0073e6;
+            background-color: #333;
             color: white;
             padding: 0.5rem 1rem;
             border: none;
@@ -257,7 +266,7 @@
         }
 
         .elegant-button:hover {
-            background-color: #005bb5;
+            background-color: #5b5b5b;
         }
 
         .profile-info {
@@ -288,6 +297,17 @@
             margin: 0.5rem 0;
             border: 1px solid #ccc;
             border-radius: 4px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
         /* Responsive */
