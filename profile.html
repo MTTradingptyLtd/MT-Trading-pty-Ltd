@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile - MT Trading (pty) Ltd</title>
+    <title>User Profile - TM FX TRADING (pty) Ltd</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="container">
             <div class="logo">
-                <h1>MT Trading <span class="small-text">(pty) Ltd</span></h1>
+                <h1>TM FX TRADING <span class="small-text">(pty) Ltd</span></h1>
             </div>
             <nav>
                 <ul class="nav-links">
@@ -84,6 +84,12 @@
                     });
                 });
             }
+            
+                        // Handle profile update on form submission
+            document.getElementById('profile-info').addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent the default form submission
+                updateProfile();
+            });
 
             function updateProfile() {
                 const gender = document.getElementById('user-gender').value;
@@ -95,8 +101,12 @@
                 update(ref(database, 'users/' + userId), { gender, country, city, street, postal })
                     .then(() => {
                         alert("Profile updated successfully!");
+                    })
+                    .catch((error) => {
+                        console.error("Error updating profile:", error);
                     });
             }
+
 
             function changePassword() {
                 const newPassword = document.getElementById('new-password').value;
@@ -160,7 +170,7 @@
 
 
     <footer>
-        <p>&copy; 2024 MT Trading (pty) Ltd. All rights reserved.</p>
+        <p>&copy; 2024 TM FX TRADING (pty) Ltd. All rights reserved.</p>
     </footer>
 
     <style>
@@ -311,17 +321,27 @@
         }
 
         /* Responsive */
+        
         @media (max-width: 768px) {
-            nav ul {
+            .nav-links {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 10px;
+                background: #333;
+                padding: 1rem;
+                width: 200px;
+                border-radius: 8px;
             }
 
             .menu-toggle {
                 display: block;
+                color: white;
             }
 
-            main, footer, .profile-container {
-                padding: 1rem;
+            .logo {
+                text-align: center;
             }
         }
     </style>
