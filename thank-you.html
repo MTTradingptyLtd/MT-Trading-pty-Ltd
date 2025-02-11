@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        body {
+            background-color: #ffcccb;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: #b22222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+        .collage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 2px;
+            z-index: -1;
+        }
+        .collage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(50%);
+        }
+        .container {
+            position: absolute;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: auto;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .collage {
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+            .container {
+                max-height: 85%;
+                max-width: 60%;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="collage">
+        <img src="images/1.jpg" alt="Image 1">
+        <img src="images/2.jpg" alt="Image 2">
+        <img src="images/3.jpg" alt="Image 3">
+        <img src="images/4.jpg" alt="Image 4">
+        <img src="images/5.jpg" alt="Image 5">
+        <img src="images/6.jpg" alt="Image 6">
+        <img src="images/7.jpg" alt="Image 7">
+        <img src="images/8.jpg" alt="Image 8">
+        <img src="images/1.jpg" alt="Image 1">
+        <img src="images/2.jpg" alt="Image 2">
+        <img src="images/3.jpg" alt="Image 3">
+        <img src="images/4.jpg" alt="Image 4">
+        <img src="images/5.jpg" alt="Image 5">
+        <img src="images/6.jpg" alt="Image 6">
+        <img src="images/7.jpg" alt="Image 7">
+        <img src="images/8.jpg" alt="Image 8">
+        <img src="images/1.jpg" alt="Image 1">
+        <img src="images/2.jpg" alt="Image 2">
+        <img src="images/3.jpg" alt="Image 3">
+        <img src="images/4.jpg" alt="Image 4">
+        <img src="images/5.jpg" alt="Image 5">
+        <img src="images/6.jpg" alt="Image 6">
+        <img src="images/7.jpg" alt="Image 7">
+        <img src="images/8.jpg" alt="Image 8">
+        <img src="images/1.jpg" alt="Image 1">
+        <img src="images/2.jpg" alt="Image 2">
+        <img src="images/3.jpg" alt="Image 3">
+        <img src="images/4.jpg" alt="Image 4">
+        <img src="images/5.jpg" alt="Image 5">
+        <img src="images/6.jpg" alt="Image 6">
+        <img src="images/7.jpg" alt="Image 7">
+        <img src="images/8.jpg" alt="Image 8">
+    </div>
+    <div class="container" >
+        <h1>Thank You!</h1>
+        <p>Thank you for accepting to be my Valentine's date!</p>
+        <p>Hey my love ❤️</p>
+
+        <p style="margin-top: 1rem; text-align: justify;">I’ve been thinking about Valentine’s Day, and I really want to spend a beautiful moment with you. Things are a bit tight financially, but I found this cozy little place that has a breakfast special—just us, coffee, and a sweet morning together. It’s before 9 AM, which is perfect because I have class at 11 AM, so I won’t have to rush or miss it.</p>
+            
+        <p style="margin-top: 1rem; text-align: justify;"> I was hoping you’d be able to spend Thursday night with me, that way we can wake up together, head out early, and share a quiet, beautiful morning before the day gets busy. But I also don’t want to be selfish—I know you might have plans or things to do, so let me know what works for you. No matter what, I just want to make sure we get to celebrate in a way that makes you happy. ❤️</p>
+        <p>"Every love story is beautiful, but ours is my favorite."</p>
+    </div>
+    
+</body>
+</html>
