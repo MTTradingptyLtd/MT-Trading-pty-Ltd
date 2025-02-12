@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Surprise</title>
+    <style>
+        body {
+            background-color: #e4cbff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: #b22222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+        .container {
+            position: absolute;
+            position: relative;
+            background-color: rgba(245, 225, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: auto;
+            text-align: center;
+            width: 60vw;
+        }
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Andile, to a special moment made just for you! 💖</h1>
+        <p>"Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day."</p>
+        
+        <form style="margin-top: 2rem;" id="quizForm">
+            <p>Before continuing, answer this:</p>
+            <p>What is the traditional flower of Valentine's Day?</p>
+            <input type="text" id="answer" placeholder="Your answer here" required>
+            <br><br>
+            <button type="button" onclick="checkAnswer()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value.trim().toLowerCase();
+            if (answer === 'rose') {
+                alert('Correct! I love you! 😘');
+                window.location.href = 'valentine-photos.html';
+            } else {
+                alert('Incorrect answer. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
